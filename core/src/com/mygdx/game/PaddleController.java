@@ -17,6 +17,8 @@ public class PaddleController {
 	
 	private Sprite paddleMarker; 
 	
+	private boolean paddleReady; 
+	
 	public static final float DEFAULT_COOLDOWN = 1.5f; 
 	
 	
@@ -65,9 +67,8 @@ public class PaddleController {
 	
 	//Add paddle if the timer is smaller than or equal to 0
 	public void attemptAddPaddle(Paddle paddle) {
-		if (timer <= 0) {
+		if (paddleReady) {
 			paddles.add(paddle); 
-			timer = coolDown; 
 		}
 	}
 	
@@ -81,6 +82,16 @@ public class PaddleController {
 	
 	public void removeAllPaddles(Collection<Paddle> toRemove) {
 		paddles.removeAll(toRemove); 
+	}
+	
+	public boolean isPaddleReady() {
+		return paddleReady; 
+	}
+	
+	public void setPaddleReady(boolean paddleReady) {
+		this.paddleReady = paddleReady; 
+		if (!paddleReady && paddles.size() == 0) 
+			paddles.add(new Paddle(paddleMarker.getX(), paddleMarker.getY()));
 	}
 	
 }
