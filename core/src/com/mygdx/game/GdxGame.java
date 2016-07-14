@@ -3,6 +3,7 @@ package com.mygdx.game;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -12,11 +13,17 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GdxGame extends ApplicationAdapter {
+	private Application app; 
+	
 	SpriteBatch batch;
 	Texture img; 
 	
-	List<Paddle> paddles; 
+	//List<Paddle> paddles; 
+	PaddleController paddleController; 
+	
 	Ball ball; 
+	
+	private boolean gameOver; 
 	
 	public static int width; 
 	public static int height; 
@@ -26,12 +33,13 @@ public class GdxGame extends ApplicationAdapter {
 		width = Gdx.graphics.getWidth(); 
 		height = Gdx.graphics.getHeight(); 
 		
+		gameOver = false; 
+		
 		batch = new SpriteBatch();
 		
-		paddles = new ArrayList<Paddle>(); 
+		//paddles = new ArrayList<Paddle>(); 
+		paddleController = new PaddleController(PaddleController.DEFAULT_COOLDOWN); 
 		
-		paddles.add(new Paddle(50, height / 2, Paddle.DEFAULT_LIFETIME)); 
-		paddles.add(new Paddle(width - 50, height / 2, Paddle.DEFAULT_LIFETIME)); 
 		
 		ball = new Ball(width / 2, height / 2, -50f, 100f); 
 	}
@@ -41,12 +49,10 @@ public class GdxGame extends ApplicationAdapter {
 		tick(); 
 		
 		
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		for (Paddle p : paddles) {
-			p.draw(batch);
-		}
+		paddleController.draw(batch);
 		ball.draw(batch);
 		batch.end();
 	}
@@ -54,21 +60,17 @@ public class GdxGame extends ApplicationAdapter {
 	private void tick() {
 		float dt = Gdx.graphics.getDeltaTime(); 
 		
-		ball.tick(dt, paddles);
+		paddleController.tick(dt);
 		
-		List<Paddle> paddlesToRemove = new ArrayList<Paddle>(); 
+		if (ball.getX() < 0) gameOver = true; 
 		
-		for (Paddle p : paddles) {
-			p.tick(dt);
-			if (p.isDead())
-				paddlesToRemove.add(p); 
-		}
+		if (gameOver) app.exit(); 
 		
-		paddles.removeAll(paddlesToRemove); 
+		ball.tick(dt, paddleController.getPaddles());
 		
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-			Paddle p = new Paddle(50, height - Gdx.input.getY() - Paddle.HEIGHT / 2, Paddle.DEFAULT_LIFETIME); 
-			paddles.add(p); 
+			Paddle p = new Paddle(Paddle.DEFAULT_X, height - Gdx.input.getY() - Paddle.HEIGHT / 2, Paddle.DEFAULT_LIFETIME); 
+			paddleController.attemptAddPaddle(p);
 		}
 		
 	}
@@ -84,5 +86,9 @@ public class GdxGame extends ApplicationAdapter {
 		super.resize(width, height);
 		GdxGame.width = width; 
 		GdxGame.height = height; 
+	}
+	
+	public void setApp(Application app) {
+		this.app = app; 
 	}
 }
