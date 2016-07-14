@@ -41,7 +41,7 @@ public class GdxGame extends ApplicationAdapter {
 		paddleController = new PaddleController(PaddleController.DEFAULT_COOLDOWN); 
 		
 		
-		ball = new Ball(width / 2, height / 2, 100f, 1f); 
+		ball = new Ball(width / 2, height / 2, 200f, 1f); 
 	}
 
 	@Override

@@ -33,10 +33,12 @@ public class Ball extends Sprite{
 					getY() <= p.getY() + p.getHeight() && 
 					getY() + getHeight() >= p.getY()) {
 				dx = Math.abs(dx); 
-				dy = dy + (getY() + (getHeight() / 2) - p.getY() + (p.getHeight() / 2));
+				dy = dy + 2f * (getY() + (getHeight() / 2) - (p.getY() + (p.getHeight() / 2)));
+				paddles.clear(); 
 				break; 
 			}
 		}
+		
 		
 		setX(getX() + dx * deltaTime); 
 		setY(getY() + dy * deltaTime); 
