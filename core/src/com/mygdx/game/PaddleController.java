@@ -102,4 +102,7 @@ public class PaddleController {
 		this.paddleReady = paddleReady; 
 	}
 	
+	public void setMaxPaddles(int maxPaddles) {
+		this.maxPaddles = maxPaddles; 
+	}
 }

@@ -29,6 +29,8 @@ public class GdxGame extends ApplicationAdapter {
 	
 	private static Score score; 
 	
+	private List<Powerup> powerups; 
+	
 	public static int width; 
 	public static int height; 
 	
@@ -60,6 +62,9 @@ public class GdxGame extends ApplicationAdapter {
 		
 		
 		ball = new Ball(width / 2, height / 2, 200f, 1f, paddleController); 
+		
+		powerups = new ArrayList<Powerup>(); 
+		powerups.add(new Powerup(100, 100, PowerupType.TWO_PADDLES));
 	}
 
 	@Override
@@ -72,6 +77,11 @@ public class GdxGame extends ApplicationAdapter {
 		batch.begin();
 		paddleController.draw(batch);
 		ball.draw(batch);
+		
+		for (Powerup pu : powerups) {
+			pu.draw(batch);
+		}
+		
 		score.draw(batch);
 		batch.end();
 	}
