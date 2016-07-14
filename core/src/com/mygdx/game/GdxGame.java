@@ -15,6 +15,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GdxGame extends ApplicationAdapter {
 	private Application app; 
 	
+	private static GdxGame instance; 
+	
 	private SpriteBatch batch;
 	private Texture img; 
 	
@@ -29,6 +31,18 @@ public class GdxGame extends ApplicationAdapter {
 	
 	public static int width; 
 	public static int height; 
+	
+	private GdxGame() {
+		super(); 
+	}
+	
+	public static GdxGame getInstance() {
+		if (instance == null) {
+			instance = new GdxGame(); 
+		}
+		
+		return instance; 
+	}
 	
 	@Override
 	public void create () {
@@ -99,11 +113,11 @@ public class GdxGame extends ApplicationAdapter {
 		this.app = app; 
 	}
 	
-	public static void setScore(int score) {
-		GdxGame.score.setScore(score); 
+	public void setScore(int score) {
+		this.score.setScore(score); 
 	}
 	
-	public static void increaseScore(int amount) {
-		GdxGame.score.increaseBy(amount);
+	public void increaseScore(int amount) {
+		this.score.increaseBy(amount);
 	}
 }

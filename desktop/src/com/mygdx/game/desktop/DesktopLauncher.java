@@ -7,7 +7,7 @@ import com.mygdx.game.GdxGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		GdxGame game = new GdxGame(); 
+		GdxGame game = GdxGame.getInstance(); 
 		LwjglApplication app = new LwjglApplication(game, config);
 		game.setApp(app);
 	}
