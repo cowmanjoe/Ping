@@ -39,6 +39,7 @@ public class Ball extends Sprite{
 				dx = Math.abs(dx); 
 				dy = dy + 2f * (getY() + (getHeight() / 2) - (p.getY() + (p.getHeight() / 2)));
 				paddleController.clearPaddles();
+				GdxGame.increaseScore(5);
 				break; 
 			}
 		}

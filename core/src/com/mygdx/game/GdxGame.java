@@ -15,15 +15,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GdxGame extends ApplicationAdapter {
 	private Application app; 
 	
-	SpriteBatch batch;
-	Texture img; 
+	private SpriteBatch batch;
+	private Texture img; 
 	
 	//List<Paddle> paddles; 
-	PaddleController paddleController; 
+	private PaddleController paddleController; 
 	
-	Ball ball; 
+	private Ball ball; 
 	
 	private boolean gameOver; 
+	
+	private static Score score; 
 	
 	public static int width; 
 	public static int height; 
@@ -32,6 +34,8 @@ public class GdxGame extends ApplicationAdapter {
 	public void create () {
 		width = Gdx.graphics.getWidth(); 
 		height = Gdx.graphics.getHeight(); 
+		
+		score = new Score(20, 20, "Score: "); 
 		
 		gameOver = false; 
 		
@@ -54,6 +58,7 @@ public class GdxGame extends ApplicationAdapter {
 		batch.begin();
 		paddleController.draw(batch);
 		ball.draw(batch);
+		score.draw(batch);
 		batch.end();
 	}
 	
@@ -92,5 +97,13 @@ public class GdxGame extends ApplicationAdapter {
 	
 	public void setApp(Application app) {
 		this.app = app; 
+	}
+	
+	public static void setScore(int score) {
+		GdxGame.score.setScore(score); 
+	}
+	
+	public static void increaseScore(int amount) {
+		GdxGame.score.increaseBy(amount);
 	}
 }
