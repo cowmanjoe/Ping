@@ -16,6 +16,7 @@ public class GdxGame extends ApplicationAdapter {
 	Texture img; 
 	
 	List<Paddle> paddles; 
+	Ball ball; 
 	
 	public static int width; 
 	public static int height; 
@@ -31,6 +32,8 @@ public class GdxGame extends ApplicationAdapter {
 		
 		paddles.add(new Paddle(50, height / 2, Paddle.DEFAULT_LIFETIME)); 
 		paddles.add(new Paddle(width - 50, height / 2, Paddle.DEFAULT_LIFETIME)); 
+		
+		ball = new Ball(width / 2, height / 2, -50f, 100f); 
 	}
 
 	@Override
@@ -44,11 +47,14 @@ public class GdxGame extends ApplicationAdapter {
 		for (Paddle p : paddles) {
 			p.draw(batch);
 		}
+		ball.draw(batch);
 		batch.end();
 	}
 	
 	private void tick() {
 		float dt = Gdx.graphics.getDeltaTime(); 
+		
+		ball.tick(dt, paddles);
 		
 		List<Paddle> paddlesToRemove = new ArrayList<Paddle>(); 
 		
@@ -61,8 +67,7 @@ public class GdxGame extends ApplicationAdapter {
 		paddles.removeAll(paddlesToRemove); 
 		
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-			Paddle p = new Paddle(Gdx.input.getX() - Paddle.WIDTH / 2, 
-					height - Gdx.input.getY() - Paddle.HEIGHT / 2, Paddle.DEFAULT_LIFETIME); 
+			Paddle p = new Paddle(50, height - Gdx.input.getY() - Paddle.HEIGHT / 2, Paddle.DEFAULT_LIFETIME); 
 			paddles.add(p); 
 		}
 		

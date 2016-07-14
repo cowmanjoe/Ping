@@ -14,7 +14,7 @@ public class Paddle extends Sprite{
 	public static final int HEIGHT = 60; 
 	public static final float DEFAULT_LIFETIME = 3.0f;
 	
-	public Paddle(int x, int y, float lifeTime) {
+	public Paddle(float x, float y, float lifeTime) {
 		super(new Texture("paddle.jpg")); 
 		setX(x); 
 		setY(y); 
