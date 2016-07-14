@@ -30,6 +30,8 @@ public class PaddleController {
 		
 		timer = 0;
 		this.coolDown = coolDown;
+		
+		paddleReady = true; 
 	}
 	
 	
@@ -72,6 +74,12 @@ public class PaddleController {
 		}
 	}
 	
+	public void attemptAddPaddle() {
+		if (paddleReady) {
+			paddles.add(new Paddle(paddleMarker.getX(), paddleMarker.getY())); 
+		}
+	}
+	
 	public void removePaddle(Paddle paddle) {
 		paddles.remove(paddle); 
 	}
@@ -90,8 +98,6 @@ public class PaddleController {
 	
 	public void setPaddleReady(boolean paddleReady) {
 		this.paddleReady = paddleReady; 
-		if (!paddleReady && paddles.size() == 0) 
-			paddles.add(new Paddle(paddleMarker.getX(), paddleMarker.getY()));
 	}
 	
 }

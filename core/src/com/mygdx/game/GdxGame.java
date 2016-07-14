@@ -41,7 +41,7 @@ public class GdxGame extends ApplicationAdapter {
 		paddleController = new PaddleController(PaddleController.DEFAULT_COOLDOWN); 
 		
 		
-		ball = new Ball(width / 2, height / 2, 200f, 1f); 
+		ball = new Ball(width / 2, height / 2, 200f, 1f, paddleController); 
 	}
 
 	@Override
@@ -66,10 +66,9 @@ public class GdxGame extends ApplicationAdapter {
 		
 		if (gameOver) app.exit(); 
 		
-		ball.tick(dt, paddleController.getPaddles());
+		ball.tick(dt);
 		
-		if (ball.goingRight()) paddleController.setPaddleReady(true);
-		if (ball.goingLeft()) paddleController.setPaddleReady(false);
+		
 		
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 			Paddle p = new Paddle(Paddle.DEFAULT_X, height - Gdx.input.getY() - Paddle.HEIGHT / 2, Paddle.DEFAULT_LIFETIME); 
