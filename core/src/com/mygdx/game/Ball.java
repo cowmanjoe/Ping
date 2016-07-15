@@ -69,4 +69,12 @@ public class Ball extends Sprite{
 	private boolean goingLeft() {
 		return dx < 0; 
 	}
+	
+	private float getXVelocity() {
+		return dx; 
+	}
+	
+	private float getYVelocity() {
+		return dy; 
+	}
 }

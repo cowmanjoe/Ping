@@ -71,13 +71,13 @@ public class PaddleController {
 	
 	//Add paddle if the timer is smaller than or equal to 0
 	public void attemptAddPaddle(Paddle paddle) {
-		if (paddleReady && paddles.size() <= maxPaddles) {
+		if (paddleReady && paddles.size() < maxPaddles) {
 			paddles.add(paddle); 
 		}
 	}
 	
 	public void attemptAddPaddle() {
-		if (paddleReady && paddles.size() <= maxPaddles) {
+		if (paddleReady && paddles.size() < maxPaddles) {
 			paddles.add(new Paddle(paddleMarker.getX(), paddleMarker.getY())); 
 		}
 	}
