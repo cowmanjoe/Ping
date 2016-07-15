@@ -9,6 +9,5 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		GdxGame game = GdxGame.getInstance(); 
 		LwjglApplication app = new LwjglApplication(game, config);
-		game.setApp(app);
 	}
 }

@@ -12,8 +12,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 public class GdxGame extends ApplicationAdapter {
-	private Application app; 
 	
 	private static GdxGame instance; 
 	
@@ -31,8 +32,8 @@ public class GdxGame extends ApplicationAdapter {
 	
 	private List<Powerup> powerups; 
 	
-	public static int width; 
-	public static int height; 
+	public int width; 
+	public int height; 
 	
 	private GdxGame() {
 		super(); 
@@ -64,7 +65,7 @@ public class GdxGame extends ApplicationAdapter {
 		ball = new Ball(width / 2, height / 2, 200f, 1f, paddleController); 
 		
 		powerups = new ArrayList<Powerup>(); 
-		powerups.add(new Powerup(100, 100, PowerupType.TWO_PADDLES));
+		powerups.add(new Powerup(100, 250, PowerupType.THREE_PADDLES));
 	}
 
 	@Override
@@ -93,15 +94,64 @@ public class GdxGame extends ApplicationAdapter {
 		
 		if (ball.getX() < 0) gameOver = true; 
 		
-		if (gameOver) app.exit(); 
+		if (gameOver) Gdx.app.exit(); 
 		
 		ball.tick(dt);
 		
-		
+		tickPowerups(dt); 
 		
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 			Paddle p = new Paddle(Paddle.DEFAULT_X, height - Gdx.input.getY() - Paddle.HEIGHT / 2, Paddle.DEFAULT_LIFETIME); 
 			paddleController.attemptAddPaddle(p);
+		}
+		
+	}
+	
+	private void tickPowerups(float deltaTime) {
+		List<Powerup> powerupsToRemove = new ArrayList<Powerup>(); 
+		for (Powerup p : powerups) {
+			p.tick(deltaTime);
+			if (p.isRemoved()) powerupsToRemove.add(p); 
+		}
+		powerups.removeAll(powerupsToRemove);
+		
+		boolean twoPaddles = false; 
+		boolean threePaddles = false; 
+		boolean longPaddle = false; 
+		
+		
+		for (Powerup p : powerups) {
+			if (p.isActive()) {
+				switch (p.getType()) {
+					case TWO_PADDLES: 
+						twoPaddles = true; 
+						break;
+						
+					case THREE_PADDLES:
+						threePaddles = true;
+						break;
+					
+					case LONG_PADDLE:
+						longPaddle = true; 
+						break;
+						
+					default: 
+						throw new UnsupportedOperationException("Powerup not recognized.");
+				}
+			}
+			
+		}
+		
+		if (threePaddles) {
+			paddleController.setMaxPaddles(3);
+		} else if (twoPaddles) {
+			paddleController.setMaxPaddles(2);
+		} else if (longPaddle) {
+			paddleController.setMaxPaddles(1); 
+			throw new NotImplementedException(); 
+		}
+		else {
+			paddleController.setMaxPaddles(1);
 		}
 		
 	}
@@ -115,13 +165,10 @@ public class GdxGame extends ApplicationAdapter {
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
-		GdxGame.width = width; 
-		GdxGame.height = height; 
+		this.width = width; 
+		this.height = height; 
 	}
 	
-	public void setApp(Application app) {
-		this.app = app; 
-	}
 	
 	public void setScore(int score) {
 		this.score.setScore(score); 
@@ -129,5 +176,9 @@ public class GdxGame extends ApplicationAdapter {
 	
 	public void increaseScore(int amount) {
 		this.score.increaseBy(amount);
+	}
+	
+	public Ball getBall() {
+		return ball; 
 	}
 }

@@ -22,12 +22,13 @@ public class Ball extends Sprite{
 	}
 	
 	public void tick(float deltaTime) {
-		if (getX() + getWidth() >= GdxGame.width) {
-			dx = -Math.abs(dx); 
+		if (getX() + getWidth() >= GdxGame.getInstance().width) {
 			paddleController.attemptAddPaddle();
+			dx = -Math.abs(dx); 
+			
 		}
 		if (getY() <= 0) dy = Math.abs(dy);
-		if (getY() + getHeight() >= GdxGame.height) dy = -Math.abs(dy);
+		if (getY() + getHeight() >= GdxGame.getInstance().height) dy = -Math.abs(dy);
 		
 		
 		
@@ -62,11 +63,11 @@ public class Ball extends Sprite{
 		return getTexture().getHeight(); 
 	}
 	
-	private boolean goingRight() {
+	public boolean goingRight() {
 		return dx > 0; 
 	}
 	
-	private boolean goingLeft() {
+	public boolean goingLeft() {
 		return dx < 0; 
 	}
 	

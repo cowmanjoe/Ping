@@ -17,10 +17,10 @@ public class PaddleController {
 	
 	private Sprite paddleMarker; 
 	
-	private boolean paddleReady; 
+	//private boolean paddleReady; 
 	private int maxPaddles; 
 	
-	public static final float DEFAULT_COOLDOWN = 1.5f; 
+	public static final float DEFAULT_COOLDOWN = 0.25f; 
 	
 	
 	public PaddleController(float coolDown) {
@@ -31,8 +31,6 @@ public class PaddleController {
 		
 		timer = 0;
 		this.coolDown = coolDown;
-		
-		paddleReady = true; 
 		maxPaddles = 1; 
 	}
 	
@@ -50,6 +48,8 @@ public class PaddleController {
 	public void tick(float deltaTime) {
 		timer -= deltaTime; 
 		
+		
+		
 		List<Paddle> paddlesToRemove = new ArrayList<Paddle>(); 
 		
 		for (Paddle p : paddles) {
@@ -62,7 +62,7 @@ public class PaddleController {
 		removeAllPaddles(paddlesToRemove); 
 		
 		
-		paddleMarker.setY(GdxGame.height - Gdx.input.getY() - Paddle.HEIGHT / 2);
+		paddleMarker.setY(GdxGame.getInstance().height - Gdx.input.getY() - Paddle.HEIGHT / 2);
 	}
 	
 	public List<Paddle> getPaddles() {
@@ -71,14 +71,22 @@ public class PaddleController {
 	
 	//Add paddle if the timer is smaller than or equal to 0
 	public void attemptAddPaddle(Paddle paddle) {
-		if (paddleReady && paddles.size() < maxPaddles) {
+		System.out.println("Attempting to add paddle. paddles.size() = " + paddles.size()
+		+ ". Max Paddles: " + maxPaddles); 
+		if (isPaddleReady() && paddles.size() < maxPaddles) {
+			timer = coolDown;
 			paddles.add(paddle); 
+			System.out.println("Paddle added"); 
 		}
 	}
 	
 	public void attemptAddPaddle() {
-		if (paddleReady && paddles.size() < maxPaddles) {
+		System.out.println("Attempting to add paddle. paddles.size() = " + paddles.size()
+		+ ". Max Paddles: " + maxPaddles); 
+		if (isPaddleReady() && paddles.size() < maxPaddles) {
+			timer = coolDown; 
 			paddles.add(new Paddle(paddleMarker.getX(), paddleMarker.getY())); 
+			System.out.println("Paddle added"); 
 		}
 	}
 	
@@ -95,12 +103,11 @@ public class PaddleController {
 	}
 	
 	public boolean isPaddleReady() {
-		return paddleReady; 
+		return GdxGame.getInstance().getBall().goingRight() && 
+				paddles.size() < maxPaddles && 
+				timer <= 0; 
 	}
 	
-	public void setPaddleReady(boolean paddleReady) {
-		this.paddleReady = paddleReady; 
-	}
 	
 	public void setMaxPaddles(int maxPaddles) {
 		this.maxPaddles = maxPaddles; 
