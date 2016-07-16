@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -31,6 +32,10 @@ public class GdxGame extends ApplicationAdapter {
 	private static Score score; 
 	
 	private List<Powerup> powerups; 
+	
+	private PredictionLine predictionLine; 
+	
+	private ShapeRenderer shapeRenderer; 
 	
 	public int width; 
 	public int height; 
@@ -64,8 +69,12 @@ public class GdxGame extends ApplicationAdapter {
 		
 		ball = new Ball(width / 2, height / 2, 200f, 1f, paddleController); 
 		
+		predictionLine = new PredictionLine(ball); 
+		
 		powerups = new ArrayList<Powerup>(); 
 		powerups.add(new Powerup(100, 250, PowerupType.THREE_PADDLES));
+		
+		shapeRenderer = new ShapeRenderer(); 
 	}
 
 	@Override
@@ -75,8 +84,14 @@ public class GdxGame extends ApplicationAdapter {
 		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		predictionLine.render(shapeRenderer);
+		
 		batch.begin();
+		
+		
 		paddleController.draw(batch);
+		
 		ball.draw(batch);
 		
 		for (Powerup pu : powerups) {
@@ -84,6 +99,9 @@ public class GdxGame extends ApplicationAdapter {
 		}
 		
 		score.draw(batch);
+		
+		
+		
 		batch.end();
 	}
 	
@@ -97,6 +115,8 @@ public class GdxGame extends ApplicationAdapter {
 		if (gameOver) Gdx.app.exit(); 
 		
 		ball.tick(dt);
+		
+		predictionLine.tick(); 
 		
 		tickPowerups(dt); 
 		

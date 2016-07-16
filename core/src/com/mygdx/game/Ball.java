@@ -71,11 +71,11 @@ public class Ball extends Sprite{
 		return dx < 0; 
 	}
 	
-	private float getXVelocity() {
+	public float getXVelocity() {
 		return dx; 
 	}
 	
-	private float getYVelocity() {
+	public float getYVelocity() {
 		return dy; 
 	}
 }
