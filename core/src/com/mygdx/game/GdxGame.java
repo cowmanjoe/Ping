@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -18,6 +19,8 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 public class GdxGame extends ApplicationAdapter {
 	
 	private static GdxGame instance; 
+	
+	private Random random; 
 	
 	private SpriteBatch batch;
 	private Texture img; 
@@ -57,6 +60,8 @@ public class GdxGame extends ApplicationAdapter {
 		width = Gdx.graphics.getWidth(); 
 		height = Gdx.graphics.getHeight(); 
 		
+		random = new Random(); 
+		
 		score = new Score(20, 20, "Score: "); 
 		
 		gameOver = false; 
@@ -72,9 +77,11 @@ public class GdxGame extends ApplicationAdapter {
 		predictionLine = new PredictionLine(ball); 
 		
 		powerups = new ArrayList<Powerup>(); 
-		powerups.add(new Powerup(100, 250, PowerupType.THREE_PADDLES));
+		
 		
 		shapeRenderer = new ShapeRenderer(); 
+		
+		spawnPowerup(PowerupType.THREE_PADDLES, 300, 50); 
 	}
 
 	@Override
@@ -174,6 +181,12 @@ public class GdxGame extends ApplicationAdapter {
 			paddleController.setMaxPaddles(1);
 		}
 		
+		// There is a 1/spawnChance chance every frame of a powerup spawning
+		int spawnChance = 50; 
+		
+		if (random.nextInt(spawnChance) == 0) spawnPowerup(); 
+		
+		
 	}
 	
 	
@@ -200,5 +213,20 @@ public class GdxGame extends ApplicationAdapter {
 	
 	public Ball getBall() {
 		return ball; 
+	}
+	
+	//spawns random powerup in random location
+	private void spawnPowerup() {
+		int x = random.nextInt(width - 200) + 100;
+		int y = random.nextInt(height); 
+		
+		int pick = new Random().nextInt(PowerupType.values().length);
+		PowerupType powerupType = PowerupType.values()[pick]; 
+		
+		spawnPowerup(powerupType, x, y); 
+	}
+	
+	private void spawnPowerup(PowerupType powerupType, int x, int y) {
+		powerups.add(new Powerup(x, y, powerupType));
 	}
 }

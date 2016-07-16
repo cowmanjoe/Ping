@@ -68,6 +68,7 @@ public class PredictionLine {
 			}
 		}
 		
+		//Move line ends to match middle of the ball
 		x1 += ball.getWidth() / 2; 
 		x2 += ball.getWidth() / 2; 
 		y1 += ball.getHeight() / 2; 

@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Powerup extends Sprite {
 	
 	private PowerupType powerupType; 
+	
+	private float initLifetime; 
 	private float lifetime; 
 	private float activeTime; 
 	
@@ -30,6 +32,7 @@ public class Powerup extends Sprite {
 		setX(x); 
 		setY(y); 
 		
+		initLifetime = DEFAULT_LIFETIME; 
 		lifetime = DEFAULT_LIFETIME; 
 		activeTime = DEFAULT_ACTIVE_TIME; 
 		
@@ -45,6 +48,7 @@ public class Powerup extends Sprite {
 		setX(x); 
 		setY(y);
 		
+		this.initLifetime = lifetime; 
 		this.lifetime = lifetime; 
 		this.activeTime = activeTime;
 		
@@ -70,6 +74,8 @@ public class Powerup extends Sprite {
 			activeTime -= deltaTime; 
 			
 		}
+		
+		setColor(1, 1, 1, lifetime / initLifetime);
 	}
 	
 	public void draw(SpriteBatch batch) {

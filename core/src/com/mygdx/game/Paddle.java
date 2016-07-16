@@ -34,12 +34,8 @@ public class Paddle extends Sprite{
 	
 	public void tick(float deltaTime) {
 		lifeTime -= deltaTime; 
-		this.setColor(1.0f, 1.0f, 1.0f, lifeTime / initLifeTime);
 	}
 	
-	public boolean isDead() {
-		return lifeTime <= 0; 
-	}
 	
 	public void draw(SpriteBatch batch) {
 		super.draw(batch);

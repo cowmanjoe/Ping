@@ -54,9 +54,7 @@ public class PaddleController {
 		
 		for (Paddle p : paddles) {
 			p.tick(deltaTime);
-			if (p.isDead()) {
-				paddlesToRemove.add(p); 
-			}
+			
 		}
 		
 		removeAllPaddles(paddlesToRemove); 
