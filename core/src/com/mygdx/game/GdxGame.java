@@ -83,7 +83,7 @@ public class GdxGame extends ApplicationAdapter {
 		
 		shapeRenderer = new ShapeRenderer(); 
 		
-		powerupText = new PowerupText(200, 10); 
+		powerupText = new PowerupText(); 
 		
 		spawnPowerup(PowerupType.THREE_PADDLES, 300, 0); 
 	}

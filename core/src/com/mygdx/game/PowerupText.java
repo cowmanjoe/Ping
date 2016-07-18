@@ -13,17 +13,12 @@ public class PowerupText {
 	
 	private List<Powerup> powerups; 
 	
-	private int x; 
-	private int y; 
 	
 	
-	
-	public PowerupText(int x, int y) {
+	public PowerupText() {
 		font = new BitmapFont(); 
 		font.setColor(Color.GREEN); 
 		
-		this.x = x; 
-		this.y = y; 
 		
 		powerups = new ArrayList<Powerup>(); 
 		
@@ -47,10 +42,11 @@ public class PowerupText {
 			
 		}
 		
-		int fixedY = (int)(y + powerups.size() * font.getLineHeight()); 
+		int x = (int)(GdxGame.getInstance().width - font.draw(batch, str, -100, -100).width); 
+		int y = (int)(powerups.size() * font.getLineHeight()); 
 		System.out.println("powerupText = " + str); 
 		
-		font.draw(batch, str, x, fixedY); 
+		font.draw(batch, str, x, y); 
 	}
 	
 	public void tick() {
