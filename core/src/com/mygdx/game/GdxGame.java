@@ -173,12 +173,15 @@ public class GdxGame extends ApplicationAdapter {
 			paddleController.setMaxPaddles(3);
 		} else if (twoPaddles) {
 			paddleController.setMaxPaddles(2);
-		} else if (longPaddle) {
-			paddleController.setMaxPaddles(1); 
-			throw new NotImplementedException(); 
+		} else {
+			paddleController.setMaxPaddles(1);
+		}
+		
+		if (longPaddle) {
+			paddleController.extendPaddles();
 		}
 		else {
-			paddleController.setMaxPaddles(1);
+			paddleController.shortenPaddles();
 		}
 		
 		// There is a 1/spawnChance chance every frame of a powerup spawning

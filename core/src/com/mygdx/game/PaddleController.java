@@ -110,4 +110,16 @@ public class PaddleController {
 	public void setMaxPaddles(int maxPaddles) {
 		this.maxPaddles = maxPaddles; 
 	}
+	
+	public void extendPaddles() {
+		for (Paddle p : paddles) {
+			p.extendPaddle();
+		}
+	}
+	
+	public void shortenPaddles() {
+		for (Paddle p : paddles) {
+			p.shortenPaddle();
+		}
+	}
 }

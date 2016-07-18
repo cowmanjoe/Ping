@@ -16,8 +16,14 @@ public class Paddle extends Sprite{
 	
 	public static final float DEFAULT_LIFETIME = 8.0f;
 	
+	private Sprite paddleSprite;
+	private Sprite extendedPaddleSprite; 
+	
 	public Paddle(float x, float y) {
 		super(new Texture("paddle.jpg"));
+		paddleSprite = new Sprite(this); 
+		extendedPaddleSprite = new Sprite(new Texture("extendedPaddle.jpg")); 
+		
 		setX(x);
 		setY(y); 
 		this.lifeTime = DEFAULT_LIFETIME; 
@@ -42,5 +48,26 @@ public class Paddle extends Sprite{
 		
 	}
 	
+	
+	public void extendPaddle() {
+		if (this.getTexture() != extendedPaddleSprite.getTexture()) {
+			float x = getX(); 
+			float y = getY(); 
+			y -= (extendedPaddleSprite.getHeight() - paddleSprite.getHeight()) / 2;
+			this.set(extendedPaddleSprite);
+			this.setX(x); 
+			this.setY(y); 
+		}
+	}
+	
+	public void shortenPaddle() {
+		if (this.getTexture() != paddleSprite.getTexture()) {
+			float x = getX(); 
+			float y = getY(); 
+			this.set(paddleSprite);
+			this.setX(x); 
+			this.setY(y); 
+		}
+	}
 	
 }
