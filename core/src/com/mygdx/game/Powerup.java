@@ -123,4 +123,22 @@ public class Powerup extends Sprite {
 	public PowerupType getType() {
 		return powerupType; 
 	}
+	
+	public String toString() {
+		switch (powerupType) {
+		case TWO_PADDLES : 
+			return "Two Paddles";
+		case THREE_PADDLES : 
+			return "Three Paddles"; 
+		case LONG_PADDLE : 
+			return "Long Paddle"; 
+		default: 
+			return null; 
+			
+		}
+	}
+	
+	public float getActiveTime() {
+		return activeTime; 
+	}
 }

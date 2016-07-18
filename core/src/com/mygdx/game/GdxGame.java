@@ -40,6 +40,8 @@ public class GdxGame extends ApplicationAdapter {
 	
 	private ShapeRenderer shapeRenderer; 
 	
+	private PowerupText powerupText; 
+	
 	public int width; 
 	public int height; 
 	
@@ -81,7 +83,9 @@ public class GdxGame extends ApplicationAdapter {
 		
 		shapeRenderer = new ShapeRenderer(); 
 		
-		spawnPowerup(PowerupType.THREE_PADDLES, 300, 50); 
+		powerupText = new PowerupText(200, 10); 
+		
+		spawnPowerup(PowerupType.THREE_PADDLES, 300, 0); 
 	}
 
 	@Override
@@ -106,6 +110,8 @@ public class GdxGame extends ApplicationAdapter {
 		}
 		
 		score.draw(batch);
+		
+		powerupText.draw(batch);
 		
 		
 		
@@ -165,12 +171,16 @@ public class GdxGame extends ApplicationAdapter {
 					default: 
 						throw new UnsupportedOperationException("Powerup not recognized.");
 				}
+				if (!powerupText.hasPowerup(p)) {
+					powerupText.addPowerup(p);
+				}
 			}
 			
 		}
 		
 		if (threePaddles) {
 			paddleController.setMaxPaddles(3);
+			
 		} else if (twoPaddles) {
 			paddleController.setMaxPaddles(2);
 		} else {
@@ -223,7 +233,7 @@ public class GdxGame extends ApplicationAdapter {
 		int x = random.nextInt(width - 200) + 100;
 		int y = random.nextInt(height); 
 		
-		int pick = new Random().nextInt(PowerupType.values().length);
+		int pick = random.nextInt(PowerupType.values().length);
 		PowerupType powerupType = PowerupType.values()[pick]; 
 		
 		spawnPowerup(powerupType, x, y); 

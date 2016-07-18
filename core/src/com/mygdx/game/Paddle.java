@@ -32,6 +32,9 @@ public class Paddle extends Sprite{
 	
 	public Paddle(float x, float y, float lifeTime) {
 		super(new Texture("paddle.jpg")); 
+		paddleSprite = new Sprite(this); 
+		extendedPaddleSprite = new Sprite(new Texture("extendedPaddle.jpg")); 
+		
 		setX(x); 
 		setY(y); 
 		this.lifeTime = lifeTime; 
