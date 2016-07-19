@@ -16,6 +16,8 @@ public class PaddleController {
 	private float timer; 
 	
 	private Sprite paddleMarker; 
+	private Sprite regularPaddleMarker; 
+	private Sprite extendedPaddleMarker; 
 	
 	//private boolean paddleReady; 
 	private int maxPaddles; 
@@ -27,6 +29,9 @@ public class PaddleController {
 		paddles = new ArrayList<Paddle>();
 		
 		paddleMarker = new Sprite(new Texture("paddleMarker.png")); 
+		regularPaddleMarker = new Sprite(paddleMarker); 
+		extendedPaddleMarker = new Sprite(new Texture("extendedPaddleMarker.png")); 
+		
 		paddleMarker.setX(Paddle.DEFAULT_X);
 		
 		timer = 0;
@@ -112,14 +117,25 @@ public class PaddleController {
 	}
 	
 	public void extendPaddles() {
+		float x = paddleMarker.getX();
+		float y = paddleMarker.getY(); 
+		
 		for (Paddle p : paddles) {
 			p.extendPaddle();
 		}
+		paddleMarker.set(extendedPaddleMarker);
+		paddleMarker.setX(x);
+		paddleMarker.setY(y); 
 	}
 	
 	public void shortenPaddles() {
+		float x = paddleMarker.getX();
+		float y = paddleMarker.getY(); 
 		for (Paddle p : paddles) {
 			p.shortenPaddle();
 		}
+		paddleMarker.set(regularPaddleMarker);
+		paddleMarker.setX(x);
+		paddleMarker.setY(y);
 	}
 }
