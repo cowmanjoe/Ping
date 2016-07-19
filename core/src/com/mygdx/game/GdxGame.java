@@ -32,15 +32,13 @@ public class GdxGame extends ApplicationAdapter {
 	
 	private boolean gameOver; 
 	
-	private static Score score; 
-	
 	private List<Powerup> powerups; 
 	
 	private PredictionLine predictionLine; 
 	
 	private ShapeRenderer shapeRenderer; 
+	private UIManager uiManager; 
 	
-	private PowerupText powerupText; 
 	
 	public int width; 
 	public int height; 
@@ -64,8 +62,6 @@ public class GdxGame extends ApplicationAdapter {
 		
 		random = new Random(); 
 		
-		score = new Score(20, 20, "Score: "); 
-		
 		gameOver = false; 
 		
 		batch = new SpriteBatch();
@@ -83,7 +79,7 @@ public class GdxGame extends ApplicationAdapter {
 		
 		shapeRenderer = new ShapeRenderer(); 
 		
-		powerupText = new PowerupText(); 
+		uiManager = new UIManager(); 
 		
 		spawnPowerup(PowerupType.THREE_PADDLES, 300, 0); 
 	}
@@ -109,9 +105,7 @@ public class GdxGame extends ApplicationAdapter {
 			pu.draw(batch);
 		}
 		
-		score.draw(batch);
-		
-		powerupText.draw(batch);
+		uiManager.draw(batch);
 		
 		
 		
@@ -171,8 +165,8 @@ public class GdxGame extends ApplicationAdapter {
 					default: 
 						throw new UnsupportedOperationException("Powerup not recognized.");
 				}
-				if (!powerupText.hasPowerup(p)) {
-					powerupText.addPowerup(p);
+				if (!uiManager.hasPowerup(p)) {
+					uiManager.addPowerup(p);
 				}
 			}
 			
@@ -217,11 +211,11 @@ public class GdxGame extends ApplicationAdapter {
 	
 	
 	public void setScore(int score) {
-		this.score.setScore(score); 
+		uiManager.setScore(score); 
 	}
 	
 	public void increaseScore(int amount) {
-		this.score.increaseBy(amount);
+		uiManager.increaseScore(amount);
 	}
 	
 	public Ball getBall() {

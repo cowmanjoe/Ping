@@ -13,12 +13,16 @@ public class PowerupText {
 	
 	private List<Powerup> powerups; 
 	
+	private int x; 
+	private int y; 
 	
+	private String text; 
 	
 	public PowerupText() {
 		font = new BitmapFont(); 
 		font.setColor(Color.GREEN); 
 		
+		text = ""; 
 		
 		powerups = new ArrayList<Powerup>(); 
 		
@@ -36,17 +40,16 @@ public class PowerupText {
 	}
 	
 	public void draw(SpriteBatch batch) {
-		String str = ""; 
+		text = ""; 
 		for (Powerup p : powerups) {
-			str += p.toString() + ": " + (int) p.getActiveTime() + "\n"; 
+			text += p.toString() + ": " + (int) p.getActiveTime() + "\n"; 
 			
 		}
 		
-		int x = (int)(GdxGame.getInstance().width - font.draw(batch, str, -100, -100).width); 
-		int y = (int)(powerups.size() * font.getLineHeight()); 
-		System.out.println("powerupText = " + str); 
 		
-		font.draw(batch, str, x, y); 
+		System.out.println("powerupText = " + text); 
+		
+		font.draw(batch, text, x, y); 
 	}
 	
 	public void tick() {
@@ -59,5 +62,29 @@ public class PowerupText {
 		}
 		
 		return false; 
+	}
+	
+	public void setX(int x) {
+		this.x = x; 
+	}
+	
+	public int getX() {
+		return x; 
+	}
+	
+	public void setY(int y) {
+		this.y = y; 
+	}
+	
+	public int getY() {
+		return y; 
+	}
+	
+	public int getWidth(SpriteBatch batch) {
+		return (int)(font.draw(batch, text, -100, -100).width);
+	}
+	
+	public int getHeight() {
+		return (int)(powerups.size() * font.getLineHeight());
 	}
 }
